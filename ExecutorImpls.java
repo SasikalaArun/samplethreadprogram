@@ -5,15 +5,17 @@ public class ExecutorImpls {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ExecutorService executor = Executors.newSingleThreadExecutor();
-		executor.submit(() -> {
-		    String threadName = Thread.currentThread().getName();
-		    System.out.println("Using Submit method " + threadName);
-		});
 		ExecutorService executor2 = Executors.newSingleThreadExecutor();
-		executor2.execute(() -> {
-		    String threadName = Thread.currentThread().getName();
-		    System.out.println("Using Execute method " + threadName);
-		});
+		Runnable ruobj= ()-> {
+			System.out.println("Threadname: "+Thread.currentThread().getName());
+		};
+		executor2.execute(ruobj);
+		
+		Runnable robj= ()-> {
+			System.out.println("Threadname: "+Thread.currentThread().getName());
+		};
+		Future fut=executor.submit(robj);
+		System.out.println("Is thread using Runnable Interface done: "+fut.isDone());
 
 		try {
 		    System.out.println("attempt to shutdown executor");
@@ -33,6 +35,7 @@ public class ExecutorImpls {
 		    executor2.shutdownNow();
 		    System.out.println("shutdown finished");
 		}
+		System.out.println("Is thread using Runnable Interface done: "+fut.isDone());
 
 	}
 }
